@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description"
+    content="Learn how the Olympia DAO and funding process work on Ethereum Classic. ECIP-1113 defines a modular governance framework, and ECIP-1114 standardizes how funding proposals are submitted, voted on, and executed." />
+  <!-- OpenGraph (shared defaults) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://etcdao.org/assets/images/og-default.png" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://etcdao.org/assets/images/og-default.png" />
+  <!-- Additional SEO -->
+  <meta name="keywords"
+    content="Ethereum Classic, Olympia DAO, ECIP-1113, ECIP-1114, governance framework, funding proposals, protocol treasury, public-goods funding, Ethereum Classic DAO" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://etcdao.org/governance.html" />
+  <meta property="og:title" content="Olympia Governance &amp; Funding Process – ECIP-1113 &amp; ECIP-1114" />
+  <meta property="og:url" content="https://etcdao.org/governance.html" />
+  <title>Olympia Governance &amp; Funding Process – ECIP-1113 &amp; ECIP-1114</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/logo.png" type="image/png" />
+
+  <!-- Global Font: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header>
+    <img src="assets/images/logo.png" alt="ETC Logo" />
+    <h1>Olympia Governance &amp; Funding Process</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="upgrade.html">Upgrade Overview</a>
+      <a href="fees.html">Fees</a>
+      <a href="treasury.html">Treasury</a>
+      <a href="#overview">Governance Overview</a>
+      <a href="#ecip1113">ECIP-1113</a>
+      <a href="#ecip1114">ECIP-1114</a>
+      <a href="#identity">Voters &amp; Identity</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="overview">
+      <div class="badge">
+        <i class="fa-solid fa-users-gear"></i>
+        ECIP-1113 &amp; ECIP-1114 · Governance &amp; Funding
+      </div>
+      <h2>Modular DAO Governance for Protocol-Level Funding</h2>
+      <p>
+        Olympia introduces a <strong>modular DAO system</strong> that governs how Ethereum Classic’s
+        protocol treasury is used. ECIP-1113 defines the core governance framework, and ECIP-1114
+        specifies the funding proposal lifecycle—from submission and review to voting and on-chain
+        execution.
+      </p>
+      <p class="sub">
+        Together, these ECIPs create a transparent, repeatable process for turning protocol revenue
+        into public goods, while keeping participation rules and identity systems at the social layer,
+        not hard-coded into the protocol.
+      </p>
+      <div class="btn-row">
+        <a class="btn" href="#ecip1113">
+          <i class="fa-solid fa-diagram-project"></i>
+          Jump to ECIP-1113
+        </a>
+        <a class="btn secondary" href="#ecip1114">
+          <i class="fa-solid fa-list-check"></i>
+          Jump to ECIP-1114
+        </a>
+      </div>
+    </section>
+
+    <section id="ecip1113">
+      <h3><i class="fa-solid fa-sitemap"></i> ECIP-1113 – Olympia DAO Governance Framework</h3>
+      <p>
+        ECIP-1113 defines the <strong>Olympia DAO</strong>: a modular governance architecture that
+        can authorize spending from the Olympia Treasury (ECIP-1112). It focuses on structure, roles,
+        and execution logic—not on who votes or how identity is defined.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4><span>Architecture</span> Modular Governance Design</h4>
+          <p>
+            The framework is built from standardized components:
+          </p>
+          <ul>
+            <li><strong>Governor module</strong> – manages proposals, voting, and state transitions.</li>
+            <li><strong>Timelock/executor</strong> – queues and executes approved actions after a delay.</li>
+            <li><strong>Registry/roles</strong> – defines which modules are allowed to call the treasury.</li>
+            <li><strong>Child-DAOs</strong> – optional sub-treasuries for specialized funding streams.</li>
+          </ul>
+          <p>
+            Each component can be upgraded or replaced via the ECIP-1000 process, while the treasury
+            vault remains immutable.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Roles</span> Governance Participants</h4>
+          <p>
+            At a high level, the framework anticipates three categories of participants:
+          </p>
+          <ul>
+            <li><strong>Proposers</strong> – entities allowed to create funding proposals.</li>
+            <li><strong>Voters / Delegates</strong> – participants who signal support or opposition.</li>
+            <li><strong>Executors</strong> – contracts that execute approved actions via timelocks.</li>
+          </ul>
+          <p>
+            ECIP-1113 describes how these roles interact and which contracts they correspond to, but
+            does not enshrine a specific voter set or identity system.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Timelocks</span> Guardrails for Execution</h4>
+          <p>
+            All treasury-affecting actions are expected to pass through a
+            <strong>timelock/executor</strong>:
+          </p>
+          <ul>
+            <li>Approved proposals are queued with a delay before execution.</li>
+            <li>The delay gives stakeholders time to review and react.</li>
+            <li>Node operators can decide whether to continue following the chain if they believe
+              an action violates social consensus.</li>
+          </ul>
+          <p>
+            This aligns with ETC’s philosophy of <strong>rough consensus and human oversight</strong>.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Child-DAOs</span> Specialized Funding Streams</h4>
+          <p>
+            ECIP-1113 allows for <strong>Child-DAOs</strong>—sub-governance modules responsible for
+            specific domains, such as:
+          </p>
+          <ul>
+            <li>Client and protocol development.</li>
+            <li>Infrastructure and tooling.</li>
+            <li>Community and ecosystem growth.</li>
+          </ul>
+          <p>
+            Child-DAOs can receive delegated budgets or have scoped authority, giving ETC a way to
+            route funds to specialized teams without centralizing control.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Key Idea:</strong>
+        ECIP-1113 describes <em>how</em> a DAO can safely control the treasury—not <em>who</em>
+        should be in charge. That question is left to the social layer and future Olympia
+        Improvement Proposals (OIPs).
+      </div>
+    </section>
+
+    <section id="ecip1114">
+      <h3><i class="fa-solid fa-list-check"></i> ECIP-1114 – Funding Proposal Lifecycle</h3>
+      <p>
+        ECIP-1114 standardizes the <strong>lifecycle of funding proposals</strong>. It defines how
+        a proposal moves from idea to executed payment, and what information must be recorded along
+        the way.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4><span>Step 1</span> Drafting &amp; Submission</h4>
+          <p>
+            Proposals begin as structured submissions that include:
+          </p>
+          <ul>
+            <li>Project description and goals.</li>
+            <li>Requested budget and payout schedule.</li>
+            <li>Milestones, deliverables, and success criteria.</li>
+            <li>Links to off-chain documentation or repositories.</li>
+          </ul>
+          <p>
+            ECIP-1114 defines the <strong>minimum metadata</strong> required so that all proposals
+            are comparable and auditable.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Step 2</span> Review &amp; Discussion</h4>
+          <p>
+            Before a proposal is put to a formal vote, it goes through a review phase:
+          </p>
+          <ul>
+            <li>Community members and experts provide feedback.</li>
+            <li>Parameters can be refined (scope, milestones, budget).</li>
+            <li>Signal polls or informal reviews may be used to gauge support.</li>
+          </ul>
+          <p>
+            The goal is to surface concerns early and improve proposals before they reach the
+            binding decision stage.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Step 3</span> Voting &amp; Decision</h4>
+          <p>
+            Once ready, the proposal enters a formal voting window managed by the Governor module:
+          </p>
+          <ul>
+            <li>Voting rules (quorum, thresholds, durations) are defined at the DAO level.</li>
+            <li>Votes are recorded on-chain for transparency.</li>
+            <li>At the end of the window, the proposal is accepted or rejected based on pre-set rules.</li>
+          </ul>
+          <p>
+            ECIP-1114 does not prescribe <em>who</em> votes; it simply defines how the decision is
+            represented on-chain.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Step 4</span> Execution &amp; Milestone Payouts</h4>
+          <p>
+            Approved proposals are queued in the timelock/executor and, after the delay, can:
+          </p>
+          <ul>
+            <li>Trigger immediate payments from the treasury.</li>
+            <li>Schedule <strong>milestone-based payouts</strong> tied to future checks.</li>
+            <li>Update DAO configuration or Child-DAO budgets.</li>
+          </ul>
+          <p>
+            ECIP-1114 supports escrow-style patterns where funds are released as work is demonstrably
+            completed.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Step 5</span> Reporting &amp; Accountability</h4>
+          <p>
+            After execution, projects are expected to:
+          </p>
+          <ul>
+            <li>Provide updates linked to their proposal ID.</li>
+            <li>Demonstrate completion of milestones.</li>
+            <li>Document outcomes and lessons for future proposers.</li>
+          </ul>
+          <p>
+            While the exact reporting format can evolve, ECIP-1114 ensures every funded project
+            has a traceable on-chain record.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Standardization:</strong>
+        By defining a common lifecycle and metadata schema, ECIP-1114 makes it easier to compare
+        proposals, audit spending, and build tools that sit on top of the Olympia DAO.
+      </div>
+    </section>
+
+    <section id="identity">
+      <h3><i class="fa-solid fa-id-card-clip"></i> Voters, Identity &amp; the Social Layer</h3>
+      <p>
+        A deliberate design choice of Olympia is to <strong>avoid enshrining voter identity</strong>
+        at the protocol level. ECIP-1113 and ECIP-1114 describe capabilities and processes, not
+        specific answers to questions like:
+      </p>
+      <ul>
+        <li>Who is allowed to vote?</li>
+        <li>How are delegates chosen?</li>
+        <li>Which identity or reputation system should be used?</li>
+      </ul>
+      <p>
+        Those decisions belong to the <strong>social layer</strong> and to future
+        <strong>Olympia Improvement Proposals (OIPs)</strong>, which can propose specific
+        governance configurations without changing the underlying ECIP-1113/1114 abstractions.
+      </p>
+      <p>
+        This approach keeps the base protocol:
+      </p>
+      <div class="pill-row">
+        <span class="pill">Neutral to governance politics</span>
+        <span class="pill">Open to multiple identity systems</span>
+        <span class="pill">Adaptable over long time horizons</span>
+        <span class="pill">Aligned with “Code is Law”</span>
+      </div>
+    </section>
+
+    <section id="safeguards">
+      <h3><i class="fa-solid fa-shield-halved"></i> Safeguards &amp; Governance Risk Management</h3>
+      <p>
+        Olympia’s governance design includes several layers of safeguards intended to reduce risk
+        and preserve ETC’s core values:
+      </p>
+      <ul>
+        <li><strong>Timelocks</strong> on treasury actions for community review.</li>
+        <li><strong>Modularity</strong>, so faulty modules can be replaced via ECIP-1000.</li>
+        <li><strong>On-chain transparency</strong> for proposals, votes, and payments.</li>
+        <li><strong>Social-layer checks</strong>, where node operators can respond if a
+          governance action is perceived as illegitimate.</li>
+      </ul>
+      <p>
+        These guardrails are meant to align long-term funding with ETC’s principles of neutrality,
+        immutability, and resistance to capture.
+      </p>
+    </section>
+
+    <section id="faq">
+      <h3><i class="fa-solid fa-circle-question"></i> FAQ – Governance &amp; Funding</h3>
+
+      <p><strong>Is Olympia governance on-chain, off-chain, or both?</strong></p>
+      <p>
+        Olympia uses <strong>on-chain mechanisms</strong> (contracts, votes, timelocks) described in
+        ECIP-1113 and ECIP-1114, but it also assumes an active <strong>social layer</strong> where
+        discussions, reviews, and coordination happen before and after on-chain decisions.
+      </p>
+
+      <p><strong>Does Olympia introduce a new governance token?</strong></p>
+      <p>
+        No new governance token is required by ECIP-1113 or ECIP-1114. Specific voter sets or token
+        models—if any—would be introduced via separate Olympia Improvement Proposals (OIPs) and
+        social-layer agreements.
+      </p>
+
+      <p><strong>Who decides which projects get funded?</strong></p>
+      <p>
+        The Olympia DAO, as defined by ECIP-1113 and configured through OIPs and community decisions,
+        is responsible for evaluating and voting on proposals submitted under ECIP-1114.
+      </p>
+
+      <p><strong>Can the governance rules be changed later?</strong></p>
+      <p>
+        Yes. The framework is designed to be modular. New governance modules, voting rules, or
+        Child-DAOs can be introduced via future ECIPs and OIPs, as long as the network reaches
+        consensus to adopt them.
+      </p>
+
+      <p><strong>How does this relate to the ECIP-1000 process?</strong></p>
+      <p>
+        ECIP-1000 remains the <strong>protocol upgrade process</strong> for Ethereum Classic. Olympia
+        governance operates <em>within</em> that framework: changes to the DAO’s core capabilities
+        still require ECIPs, client implementations, and network-wide upgrades.
+      </p>
+
+      <p><strong>Where can I see which proposals have been funded?</strong></p>
+      <p>
+        Every proposal under ECIP-1114 is expected to have:
+      </p>
+      <ul>
+        <li>An on-chain identifier and metadata.</li>
+        <li>A record of votes and decisions.</li>
+        <li>Linked treasury transactions for payouts.</li>
+      </ul>
+      <p>
+        Explorers and dashboards can present this information in human-readable form. For more on
+        how funds are used in practice, see the <a href="impact.html">Ecosystem Impact &amp; Use Cases</a>
+        and <a href="roadmap.html">Olympia Roadmap &amp; Milestones</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Ethereum Classic DAO · <a href="index.html">Back to Home</a></p>
+  </footer>
+</body>
+</html>

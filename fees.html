@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Charset & viewport -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO Description -->
+  <meta name="description"
+    content="Learn how the Olympia Upgrade changes Ethereum Classic fees. ECIP-1111 adds EIP-1559-style BASEFEE accounting and non-inflationary treasury funding, while ECIP-1115 offers an optional miner incentive smoothing model." />
+
+  <!-- OpenGraph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fees & Miner Incentives – ECIP-1111 & ECIP-1115" />
+  <meta property="og:url" content="https://etcdao.org/fees.html" />
+  <meta property="og:image" content="https://etcdao.org/assets/images/og-default.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://etcdao.org/assets/images/og-default.png" />
+
+  <!-- Additional SEO -->
+  <meta name="keywords"
+    content="Ethereum Classic fees, gas, Olympia Upgrade, ECIP-1111, ECIP-1115, EIP-1559, BASEFEE, miner incentives, protocol treasury" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://etcdao.org/fees.html" />
+
+  <title>Fees & Miner Incentives – Olympia Upgrade</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/logo.png" type="image/png" />
+
+  <!-- Global Font: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body>
+  <header>
+    <img src="assets/images/logo.png" alt="ETC Logo" />
+    <h1>Fees &amp; Miner Incentives – Olympia Upgrade</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="upgrade.html">Olympia Overview</a>
+      <a href="#ecip1111">ECIP-1111</a>
+      <a href="#smoothing">ECIP-1115</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="badge">
+        <i class="fa-solid fa-gas-pump"></i>
+        ECIP-1111 &amp; ECIP-1115 · Fees &amp; Miner Incentives
+      </div>
+      <h2>Modern Fees, Non-Inflationary Funding, Optional Smoothing</h2>
+      <p>
+        Olympia updates Ethereum Classic’s fee system to use
+        <strong>EIP-1559-style BASEFEE accounting</strong>, while preserving Proof-of-Work
+        and fixed emission. ECIP-1111 introduces modern transaction types and redirects
+        BASEFEE to a protocol-level destination; ECIP-1115 adds an <strong>optional</strong>
+        smoothing mechanism for miner incentives.
+      </p>
+      <p class="sub">
+        This page explains how fees work before and after Olympia, what changes for users,
+        wallet providers, miners, and node operators, and how the optional smoothing layer
+        fits into the broader design.
+      </p>
+      <div class="btn-row">
+        <a class="btn" href="#ecip1111">
+          <i class="fa-solid fa-diagram-project"></i>
+          Jump to ECIP-1111
+        </a>
+        <a class="btn secondary" href="#smoothing">
+          <i class="fa-solid fa-wave-square"></i>
+          Jump to ECIP-1115
+        </a>
+      </div>
+    </section>
+
+    <section id="context">
+      <h3><i class="fa-solid fa-timeline"></i> Current ETC Fee Model vs. Olympia</h3>
+      <p>
+        Today, Ethereum Classic uses a <strong>legacy gas price model</strong>:
+        transactions specify a single <code>gasPrice</code>, miners choose which
+        transactions to include, and the entire fee (<code>gasUsed × gasPrice</code>)
+        goes directly to the miner.
+      </p>
+
+      <p>Olympia addresses long-standing challenges by introducing:</p>
+
+      <div class="pill-row">
+        <span class="pill">EIP-1559-style BASEFEE</span>
+        <span class="pill">Type-2 Transactions</span>
+        <span class="pill">BASEFEE Redirection</span>
+        <span class="pill">Predictable Gas Estimation</span>
+        <span class="pill">Optional Smoothing Layer</span>
+      </div>
+    </section>
+
+    <section id="ecip1111">
+      <h3><i class="fa-solid fa-gas-pump"></i> ECIP-1111 – EVM & Protocol Upgrades</h3>
+      <p>
+        ECIP-1111 integrates <strong>EIP-1559-style fee mechanics</strong> into Ethereum Classic
+        and enables BASEFEE redirection. Conceptually, it introduces two key elements:
+      </p>
+
+      <ul>
+        <li>A <strong>per-block BASEFEE</strong> that adjusts based on block utilization.</li>
+        <li>
+          <strong>Type-2 transactions</strong> using <code>max_fee_per_gas</code> and
+          <code>max_priority_fee_per_gas</code>.
+        </li>
+      </ul>
+
+      <div class="cards">
+        <div class="card">
+          <h4><span>Mechanics</span> How BASEFEE Works</h4>
+          <p>
+            BASEFEE is a protocol-set minimum gas price. When blocks exceed the target
+            utilization, BASEFEE rises; when demand falls, BASEFEE decreases.
+          </p>
+          <p>
+            This stabilizes gas price estimation and gives wallets predictable fee information.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>User Experience</span> Max Fee + Tip</h4>
+          <p>
+            Users specify:
+          </p>
+          <ul>
+            <li><strong>Max fee per gas</strong> — maximum amount willing to pay</li>
+            <li><strong>Priority fee (tip)</strong> — added to incentivize miners</li>
+          </ul>
+          <p>
+            This is the same model widely used across EIP-1559 networks.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Compatibility</span> Tooling & Wallet Support</h4>
+          <p>
+            ECIP-1111 enhances compatibility with:
+          </p>
+          <ul>
+            <li>Wallets expecting 1559-style fields</li>
+            <li>Gas estimation libraries</li>
+            <li>Contracts using the BASEFEE opcode</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4><span>Incentives</span> Miner Revenue</h4>
+          <p>
+            Miners still receive:
+          </p>
+          <ul>
+            <li>The full block reward</li>
+            <li>Priority fees (tips)</li>
+          </ul>
+          <p>
+            BASEFEE is redirected to a consensus-defined destination such as
+            the <strong>Olympia Treasury</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Non-inflationary:</strong> BASEFEE redirection does not mint ETC.
+      </div>
+    </section>
+
+    <section id="smoothing">
+      <h3><i class="fa-solid fa-wave-square"></i> ECIP-1115 – Optional Miner Incentive Smoothing</h3>
+      <p>
+        ECIP-1115 introduces an optional <strong>smoothing layer</strong> that redistributes BASEFEE-derived
+        value over a series of blocks using a modeled <strong>L-curve</strong>.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4><span>Goal</span> Stabilize Miner Revenue</h4>
+          <p>
+            Smoothing reduces short-term volatility while preserving long-term revenue.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Mechanism</span> L-Curve Release</h4>
+          <p>
+            BASEFEE is released gradually rather than all at once, stabilizing the
+            hashrate incentive environment.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Optional</span> Independent From 1111–1114</h4>
+          <p>
+            The smoothing layer is not required for the core Olympia upgrade to function.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Optional by design:</strong> ECIP-1115 can be enabled or omitted by consensus.
+      </div>
+    </section>
+
+    <section id="faq">
+      <h3><i class="fa-solid fa-circle-question"></i> FAQ – Fees & Incentives</h3>
+
+      <p><strong>Does Olympia make transactions more expensive?</strong></p>
+      <p>
+        No. BASEFEE aims to improve predictability, not raise average costs.
+      </p>
+
+      <p><strong>What changes for wallets?</strong></p>
+      <p>
+        Wallets will use <code>max_fee_per_gas</code> and <code>max_priority_fee_per_gas</code>,
+        just like EIP-1559.
+      </p>
+
+      <p><strong>Do miners lose revenue?</strong></p>
+      <p>
+        Miners keep block rewards and tips. Redirected BASEFEE becomes shared protocol revenue.
+      </p>
+
+      <p><strong>Is smoothing required?</strong></p>
+      <p>No — ECIP-1115 is optional.</p>
+
+      <p><strong>Where do I learn more?</strong></p>
+      <ul>
+        <li><a href="upgrade.html">Olympia Upgrade Overview</a></li>
+        <li><a href="treasury.html">Treasury Contract (ECIP-1112)</a></li>
+        <li><a href="governance.html">Governance & Funding (ECIP-1113 & 1114)</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      © 2025 Ethereum Classic DAO ·
+      <a href="index.html" style="color: var(--green); text-decoration:none;">Back to Home</a>
+    </p>
+  </footer>
+</body>
+</html>

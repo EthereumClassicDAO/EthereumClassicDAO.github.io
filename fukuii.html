@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Charset & viewport -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO description -->
+  <meta name="description"
+    content="Fukuii is a modern, Scala-based Ethereum Classic client and the first reference implementation for the Olympia Upgrade’s consensus-layer changes, including EIP-1559-style BASEFEE and ECIP-1111 support." />
+
+  <!-- OpenGraph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fukuii – Native Ethereum Classic Client for Olympia" />
+  <meta property="og:url" content="https://etcdao.org/fukuii.html" />
+  <meta property="og:image" content="https://etcdao.org/assets/images/og-default.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://etcdao.org/assets/images/og-default.png" />
+
+  <!-- Additional SEO -->
+  <meta name="keywords"
+    content="Ethereum Classic, Fukuii, Mantis, Olympia Upgrade, ECIP-1111, BASEFEE, EIP-1559, ECIP-1103, ECIP-1104, ECIP-1109, Scala client, PoW client, Ethereum Classic node, chippr robotics" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://etcdao.org/fukuii.html" />
+
+  <title>Fukuii – Native Ethereum Classic Client for Olympia</title>
+
+  <!-- Favicon / Logo -->
+  <link rel="icon" href="assets/images/logo.png" type="image/png" />
+
+  <!-- Global Font: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body>
+  <header>
+    <img src="assets/images/logo.png" alt="ETC Logo" />
+    <h1>Fukuii Client &amp; Olympia Implementation</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="upgrade.html">Upgrade Overview</a>
+      <a href="roadmap.html">Roadmap</a>
+      <a href="fees.html">Fees</a>
+      <a href="treasury.html">Treasury</a>
+      <a href="governance.html">Governance</a>
+      <a href="#about">About Fukuii</a>
+      <a href="#role">Role in Olympia</a>
+      <a href="#run">Running Fukuii</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="badge">
+        <i class="fa-solid fa-server"></i>
+        Native ETC Client · Scala 3 · JDK 21
+      </div>
+
+      <h2>Fukuii: Ethereum Classic’s Native Client for the Olympia Era</h2>
+      <p>
+        Fukuii is a modern Ethereum Classic client written in Scala and maintained independently of the
+        Ethereum Foundation’s Proof-of-Stake roadmap. It continues and rebrands the Mantis client
+        lineage, while upgrading the stack to Scala 3, JDK 21, and a contemporary CI/CD and operations
+        toolchain. Fukuii is the first client to implement the consensus-layer changes required for the
+        Olympia Upgrade, including <strong>ECIP-1111</strong>’s EIP-1559-style BASEFEE mechanics.
+      </p>
+      <p class="sub">
+        By providing a native, ETC-focused client without upstream Geth dependencies, Fukuii helps
+        resolve the client deprecation risks created when Ethereum mainnet moved to Proof-of-Stake and
+        optimized for an L2-centric roadmap. For Ethereum Classic, it restores a long-term, sovereign
+        path for protocol development and testing—essential for deploying Olympia safely.
+      </p>
+    </section>
+
+    <!-- ABOUT FUKUII -->
+    <section id="about">
+      <h3><i class="fa-solid fa-circle-info"></i> About Fukuii</h3>
+      <p>
+        Fukuii is a continuation and re-branding of the Ethereum Classic client previously known as
+        <strong>Mantis</strong>. Mantis was originally developed by Input Output (HK) as a Scala client
+        for Ethereum Classic. Fukuii is an independent fork maintained by <strong>Chippr Robotics LLC</strong>
+        with the goal of modernizing the codebase, updating the dependencies, and ensuring long-term
+        support for ETC.
+      </p>
+      <p>
+        The project keeps the core architecture and Ethereum Classic compatibility of Mantis, while
+        moving to a robust, up-to-date technology stack:
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4>Modernized Stack</h4>
+          <ul>
+            <li>Scala <strong>3.3.4</strong> (LTS) and JDK <strong>21</strong> (LTS) as the only supported versions.</li>
+            <li>Migration from Akka to <strong>Apache Pekko</strong> for actor-based concurrency.</li>
+            <li>Migration from Monix to <strong>Cats Effect 3 IO</strong> for functional effects.</li>
+            <li>Updated JSON and networking libraries, including a vendored Scalanet module.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Licensing &amp; Lineage</h4>
+          <ul>
+            <li>Distributed under the <strong>Apache 2.0</strong> license.</li>
+            <li>Preserves the original Mantis NOTICE file with proper attribution.</li>
+            <li>Renames binaries, packages, and configuration keys from <code>mantis</code> to <code>fukuii</code>.</li>
+            <li>Maintains explicit documentation of the fork’s origin and evolution.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Production-Ready Hygiene</h4>
+          <ul>
+            <li>Comprehensive CI pipeline with automated tests on every push and PR.</li>
+            <li>Docker images, SBOMs, SLSA provenance, and signed container releases.</li>
+            <li>Static analysis with formatting, style checks, and coverage tooling.</li>
+            <li>Operational runbooks for monitoring, health checks, and incident response.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout section-spacer">
+        <strong>Why it matters:</strong> A stable, modern client is a prerequisite for deploying
+        protocol upgrades like Olympia in a way that is consistent with Ethereum Classic’s conservative,
+        safety-first approach to hard forks.
+      </div>
+    </section>
+
+    <!-- ROLE IN OLYMPIA -->
+    <section id="role">
+      <h3><i class="fa-solid fa-layer-group"></i> Fukuii’s Role in the Olympia Upgrade</h3>
+      <p>
+        Olympia introduces a protocol-native funding layer to Ethereum Classic by adding EIP-1559-style
+        BASEFEE accounting, redirecting that BASEFEE to an immutable Treasury, and wiring a DAO-based
+        governance and funding process on top. Fukuii is the first client to integrate the
+        <strong>consensus-layer changes</strong> required to make this possible.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4>Implementing ECIP-1111</h4>
+          <p>
+            Fukuii is integrating <strong>ECIP-1111: Olympia EVM &amp; Protocol Upgrades</strong>, which
+            introduces EIP-1559-style fee mechanics and the <code>BASEFEE</code> opcode (EIP-3198) to
+            Ethereum Classic. On ETC, BASEFEE is not burned; it is redirected at the consensus layer to
+            the Olympia Treasury, enabling non-inflationary protocol funding.
+          </p>
+          <ul>
+            <li>Support for type-2 transactions and modern fee market semantics.</li>
+            <li>BASEFEE calculation and inclusion in block headers.</li>
+            <li>Consensus rules for redirecting BASEFEE to the Treasury address.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Testnet &amp; Bootstrap Improvements</h4>
+          <p>
+            Fukuii is designed to make testnet experimentation and node operation more practical for
+            operators and developers validating Olympia. Recent releases include:
+          </p>
+          <ul>
+            <li>Faster initial sync via <strong>bootstrap checkpoints</strong> and trusted pivot blocks.</li>
+            <li>Support for ETC mainnet and Mordor testnet out of the box.</li>
+            <li>Optional console UI (TUI) for monitoring sync progress.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Client Independence for ETC</h4>
+          <p>
+            With upstream Geth deprecating Proof-of-Work support and focusing on Ethereum’s PoS and L2
+            roadmap, relying solely on forked Geth derivatives increases long-term risk for Ethereum
+            Classic. Fukuii provides:
+          </p>
+          <ul>
+            <li>A <strong>native ETC client</strong> with no dependency on future Ethereum Foundation decisions.</li>
+            <li>A codebase and release process aligned with ETC’s upgrade schedule and ECIP process.</li>
+            <li>A sustainable platform for testing and deploying Olympia and future ETC upgrades.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout section-spacer">
+        <strong>Status Update:</strong>
+        As of November 11, 2025 (“Olympia Day”), the Fukuii client is the primary reference
+        implementation for ECIP-1111’s consensus-layer changes. Future phases focus on testnet
+        deployment, operational testing, and coordination with other clients before any mainnet
+        activation is considered through ECIP-1000.
+      </div>
+    </section>
+
+    <!-- RUNNING FUKUII (HIGH-LEVEL) -->
+    <section id="run">
+      <h3><i class="fa-solid fa-terminal"></i> Running Fukuii</h3>
+      <p>
+        Fukuii can be run in production or development settings using Docker, GitHub Codespaces, or a
+        local build from source. This page provides a high-level overview; operators should always
+        consult the official documentation for the latest commands, images, and security practices.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4>Option 1 – Docker (Recommended for Production)</h4>
+          <p>
+            The simplest way to run Fukuii in production is via Docker images published to Docker Hub
+            and GitHub Container Registry. Images for stable releases are signed and include provenance
+            metadata and SBOMs for supply chain verification.
+          </p>
+          <ul>
+            <li>Run ETC mainnet and Mordor testnet with versioned, signed images.</li>
+            <li>Persist data and configuration via mounted volumes.</li>
+            <li>Integrate liveness and readiness probes with /health and /readiness endpoints.</li>
+          </ul>
+          <p>
+            Refer to the project’s Docker documentation for exact image names, tags, and
+            signature-verification steps.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4>Option 2 – GitHub Codespaces (For Development)</h4>
+          <p>
+            For developers contributing to Fukuii or testing Olympia changes, GitHub Codespaces provides
+            a preconfigured environment with JDK 21, SBT, and Scala tooling pre-installed.
+          </p>
+          <ul>
+            <li>Spin up a dev environment directly from the repository.</li>
+            <li>Run tests, experiment with configuration, and inspect logs.</li>
+            <li>Follow the <code>.devcontainer</code> documentation for usage details.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Option 3 – Local Development</h4>
+          <p>
+            For operators and developers who prefer running from source, Fukuii can be built locally
+            using the standard Scala toolchain.
+          </p>
+          <ul>
+            <li>Requirements include JDK 21, SBT, and Python for auxiliary scripts.</li>
+            <li>Build artifacts via <code>sbt dist</code> and run using the <code>fukuii</code> launcher.</li>
+            <li>Support for ETC, Mordor, and internal test networks.</li>
+          </ul>
+          <p>
+            The project README and runbooks provide detailed build and configuration instructions.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout section-spacer">
+        <strong>Note:</strong>
+        For security-critical deployments, always use signed, versioned images or tagged releases,
+        verify signatures where available, and follow best practices from the project’s operations
+        documentation.
+      </div>
+    </section>
+
+    <!-- OPERATIONS & MONITORING -->
+    <section id="ops">
+      <h3><i class="fa-solid fa-heart-pulse"></i> Operations, Health Checks &amp; Monitoring</h3>
+      <p>
+        Fukuii is designed for modern infrastructure environments such as Kubernetes, Docker Swarm,
+        and managed container platforms. It exposes HTTP endpoints for health and readiness checks and
+        integrates with metrics and logging systems.
+      </p>
+
+      <ul>
+        <li><strong>/health</strong> – basic liveness probe indicating that the node is running.</li>
+        <li><strong>/readiness</strong> – readiness probe that checks peer count and chain progress.</li>
+        <li><strong>/healthcheck</strong> – detailed node status, including best block numbers and sync state.</li>
+      </ul>
+
+      <p>
+        These endpoints make it straightforward to wire Fukuii into orchestration tools with restart
+        policies, rolling upgrades, and automated alerting. Configuration options allow operators to
+        tune thresholds for “stuck” node detection and syncing status.
+      </p>
+
+      <div class="callout section-spacer">
+        <strong>For Operators:</strong>
+        Consult the project’s operations runbooks for recommended dashboards, logging strategies,
+        peering configuration, disk management, backup and restore practices, and known issue
+        workarounds.
+      </div>
+    </section>
+
+    <!-- CONTRIBUTING -->
+    <section id="contribute">
+      <h3><i class="fa-solid fa-code-branch"></i> Contributing to Fukuii</h3>
+      <p>
+        Fukuii is an open-source project, and contributions are welcome—from bug reports and
+        documentation fixes to new features, performance improvements, and security reviews.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4>Before You Open a PR</h4>
+          <ul>
+            <li>Read the contributing guide and code of conduct.</li>
+            <li>Run the full formatting, style, and test suite (e.g., <code>sbt pp</code> or equivalent).</li>
+            <li>Document changes clearly, especially when modifying code derived from Mantis.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Areas That Need Help</h4>
+          <ul>
+            <li>Testing and validating ECIP-1111 behavior on testnets.</li>
+            <li>Performance tuning for initial sync and snapshot strategies.</li>
+            <li>Documentation improvements and operations runbooks.</li>
+            <li>Monitoring, alerting, and deployment examples for common environments.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Staying Aligned with ETC</h4>
+          <p>
+            Fukuii’s roadmap is closely tied to the Ethereum Classic ECIP process. Contributors are
+            encouraged to follow ECIP discussions—especially those related to Olympia, client diversity,
+            and protocol upgrades—so that changes to Fukuii remain consistent with network-wide plans.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED PAGES -->
+    <section id="links">
+      <h3><i class="fa-solid fa-link"></i> Related Olympia Pages</h3>
+      <p>
+        For more context on how Fukuii fits into the broader Olympia Upgrade, see:
+      </p>
+      <ul>
+        <li><a href="upgrade.html">Olympia Upgrade Overview (ECIPs 1111–1115)</a></li>
+        <li><a href="roadmap.html">Olympia Roadmap &amp; Milestones</a></li>
+        <li><a href="fees.html">Fees &amp; Miner Incentives (ECIP-1111 &amp; 1115)</a></li>
+        <li><a href="treasury.html">Olympia Treasury Contract (ECIP-1112)</a></li>
+        <li><a href="governance.html">Olympia Governance &amp; Funding Process (ECIP-1113 &amp; 1114)</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Ethereum Classic DAO · <a href="index.html">Back to Home</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description"
+    content="Learn how the Olympia Treasury (ECIP-1112) creates an immutable, protocol-controlled vault for Ethereum Classic’s BASEFEE revenue, enabling non-inflationary, transparent public-goods funding." />
+  <!-- OpenGraph (shared defaults) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://etcdao.org/assets/images/og-default.png" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://etcdao.org/assets/images/og-default.png" />
+  <!-- Additional SEO -->
+  <meta name="keywords"
+    content="Ethereum Classic, Olympia Treasury, ECIP-1112, protocol treasury, BASEFEE, non-inflationary funding, Ethereum Classic DAO, public-goods funding" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://etcdao.org/treasury.html" />
+  <meta property="og:title" content="Olympia Treasury – ECIP-1112" />
+  <meta property="og:url" content="https://etcdao.org/treasury.html" />
+  <title>Olympia Treasury – ECIP-1112</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/logo.png" type="image/png" />
+
+  <!-- Global Font: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header>
+    <img src="assets/images/logo.png" alt="ETC Logo" />
+    <h1>Olympia Treasury – ECIP-1112</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="upgrade.html">Upgrade Overview</a>
+      <a href="#role">Role of the Treasury</a>
+      <a href="#design">Design &amp; Invariants</a>
+      <a href="#flows">Funding Flows</a>
+      <a href="#security">Security</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="badge">
+        <i class="fa-solid fa-vault"></i>
+        ECIP-1112 · Protocol-Controlled Treasury Contract
+      </div>
+      <h2>A Non-Inflationary, Immutable Vault for Protocol Revenue</h2>
+      <p>
+        ECIP-1112 defines the <strong>Olympia Treasury</strong>: a protocol-controlled, immutable smart
+        contract that receives BASEFEE redirected by ECIP-1111 and disburses funds only through
+        standardized governance calls defined in ECIP-1113 and ECIP-1114.
+      </p>
+      <p class="sub">
+        The treasury does not mint new ETC, has no privileged upgrade keys, and is intentionally
+        minimalist. Its purpose is to securely hold protocol revenue and execute payments
+        authorized by the Olympia DAO.
+      </p>
+      <div class="btn-row">
+        <a class="btn" href="#design">
+          <i class="fa-solid fa-shield"></i>
+          See Core Invariants
+        </a>
+        <a class="btn secondary" href="governance.html">
+          <i class="fa-solid fa-users-gear"></i>
+          View Governance Layer
+        </a>
+      </div>
+    </section>
+
+    <section id="role">
+      <h3><i class="fa-solid fa-landmark"></i> Role of the Olympia Treasury</h3>
+      <p>
+        The Olympia Treasury is the <strong>on-chain vault</strong> at the center of the upgrade.
+        It is the endpoint for redirected BASEFEE and the source of funds for approved public-goods
+        proposals.
+      </p>
+      <p>
+        In the Olympia architecture:
+      </p>
+      <ul>
+        <li><strong>ECIP-1111</strong> handles BASEFEE accounting and redirection.</li>
+        <li><strong>ECIP-1112</strong> defines the treasury vault that receives those funds.</li>
+        <li><strong>ECIP-1113</strong> defines the DAO framework that can authorize withdrawals.</li>
+        <li><strong>ECIP-1114</strong> defines the proposal and execution process.</li>
+      </ul>
+      <p>
+        You can think of the treasury as:
+      </p>
+      <div class="pill-row">
+        <span class="pill">Single source of truth for protocol funds</span>
+        <span class="pill">Minimal, auditable state machine</span>
+        <span class="pill">No governance baked into the vault</span>
+        <span class="pill">Governed externally by Olympia DAO</span>
+      </div>
+      <p>
+        By limiting the treasury’s responsibilities to <strong>holding and releasing funds</strong>,
+        ECIP-1112 keeps the contract simple to reason about and easy to monitor, while letting
+        governance logic evolve in separate, upgradeable modules.
+      </p>
+    </section>
+
+    <section id="design">
+      <h3><i class="fa-solid fa-cubes-stacked"></i> Design &amp; Core Invariants</h3>
+      <p>
+        ECIP-1112 is built around a small set of strict invariants. These invariants are what give
+        the treasury its security properties and make it acceptable as a protocol-level funding
+        mechanism.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4><span>Invariant 1</span> No Minting, No Inflation</h4>
+          <p>
+            The treasury <strong>cannot mint ETC</strong>. It can only hold what it receives
+            (for example, redirected BASEFEE) and send those funds to other addresses. The ETC
+            supply remains governed entirely by the existing block reward schedule.
+          </p>
+          <ul>
+            <li>No functions that increase total ETC supply.</li>
+            <li>All balances can be derived from inflows and outflows on-chain.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4><span>Invariant 2</span> Immutable Contract Code</h4>
+          <p>
+            Once deployed, the treasury contract code is <strong>immutable</strong>. There are no
+            upgrade keys, no proxy indirection, and no owner address that can change its behavior.
+          </p>
+          <ul>
+            <li>No upgradeable proxy patterns.</li>
+            <li>No admin-only methods to alter core logic.</li>
+            <li>Long-term predictability for all users and stakeholders.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4><span>Invariant 3</span> Protocol-Controlled, Not Multisig-Controlled</h4>
+          <p>
+            The treasury is <strong>owned by the protocol</strong>, not by a multisig or a legal
+            entity. It is wired directly into consensus rules that define:
+          </p>
+          <ul>
+            <li>How BASEFEE is redirected into the contract (via ECIP-1111).</li>
+            <li>Which governance modules can trigger authorized withdrawals.</li>
+          </ul>
+          <p>
+            There is no “emergency key” that can bypass or override the DAO.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Invariant 4</span> Minimal External Interface</h4>
+          <p>
+            The treasury exposes a <strong>minimal set of functions</strong>, primarily:
+          </p>
+          <ul>
+            <li>Accepting protocol-directed inflows (e.g., BASEFEE).</li>
+            <li>Executing payments to recipients when instructed by authorized governance modules.</li>
+          </ul>
+          <p>
+            It does not implement proposal logic, voting, or complex business rules. Those live
+            in the DAO contracts defined by ECIP-1113 and ECIP-1114.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4><span>Invariant 5</span> Transparent State &amp; Auditable History</h4>
+          <p>
+            All treasury-related data is fully on-chain and accessible:
+          </p>
+          <ul>
+            <li>Full transaction history is visible via block explorers.</li>
+            <li>Simple read-only methods expose balances &amp; payment history.</li>
+            <li>Supports analytics and monitoring without special access.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Separation of Concerns:</strong>
+        ECIP-1112 treats the treasury as a <em>pure vault</em>. All politics, preferences, and
+        participation rules live in the governance layer (ECIP-1113/1114), not in the contract
+        that holds funds.
+      </div>
+    </section>
+
+    <section id="flows">
+      <h3><i class="fa-solid fa-arrow-right-arrow-left"></i> Funding Flows: From Fees to Public Goods</h3>
+      <p>
+        The Olympia Treasury exists as part of a wider pipeline that connects transaction fees
+        to public-goods funding. At a high level, the flow looks like this:
+      </p>
+      <ol>
+        <li>
+          <strong>Fees Paid:</strong> Users submit transactions using EIP-1559-style fields (ECIP-1111),
+          paying BASEFEE + tip.
+        </li>
+        <li>
+          <strong>Revenue Split:</strong> Miners receive block rewards and tips, while BASEFEE is redirected
+          to a destination chosen by consensus—typically the Olympia Treasury.
+        </li>
+        <li>
+          <strong>Treasury Accumulates Funds:</strong> The treasury contract accumulates BASEFEE over time.
+          Its balance and history are visible to everyone.
+        </li>
+        <li>
+          <strong>Proposals Submitted:</strong> Projects and contributors submit funding proposals using the
+          process defined in ECIP-1114.
+        </li>
+        <li>
+          <strong>DAO Approval:</strong> The Olympia DAO (ECIP-1113) reviews, votes on, and authorizes
+          eligible proposals.
+        </li>
+        <li>
+          <strong>Payments Executed:</strong> Once a proposal is approved and conditions are met, the treasury
+          executes payments to recipients as defined by the governance contracts.
+        </li>
+      </ol>
+      <p>
+        This structure ensures a <strong>clear line of sight</strong> from fees paid by users to
+        public goods funded on Ethereum Classic.
+      </p>
+    </section>
+
+    <section id="security">
+      <h3><i class="fa-solid fa-shield-halved"></i> Security Model &amp; Operational Considerations</h3>
+      <p>
+        Because the treasury is protocol-controlled and immutable, its security model is tied to
+        the security of Ethereum Classic itself:
+      </p>
+      <ul>
+        <li>Client implementations must correctly enforce the rules defined in ECIP-1112.</li>
+        <li>Consensus rules ensure that only authorized governance calls can move funds.</li>
+        <li>Any change to the treasury’s behavior requires a new ECIP and network upgrade.</li>
+      </ul>
+      <p>
+        From an operational perspective:
+      </p>
+      <ul>
+        <li>
+          Node operators do not need to manage private keys for the treasury; it is controlled by
+          protocol rules, not by a wallet.
+        </li>
+        <li>
+          Explorers and analytics tools can track inflows and outflows to support transparency
+          and community oversight.
+        </li>
+        <li>
+          Governance participants focus on proposal quality and execution conditions rather than
+          low-level custody mechanics.
+        </li>
+      </ul>
+      <div class="callout">
+        <strong>Key Insight:</strong>
+        The treasury reduces reliance on trusted custodians and multisigs. Security depends on
+        <em>protocol correctness</em> and <em>open governance</em>, not on the operational hygiene
+        of a small group of signers.
+      </div>
+    </section>
+
+    <section id="faq">
+      <h3><i class="fa-solid fa-circle-question"></i> FAQ – Treasury Design</h3>
+
+      <p><strong>Does the treasury introduce inflation?</strong></p>
+      <p>
+        No. The treasury cannot mint ETC. It only receives existing protocol revenue (such as BASEFEE)
+        and releases those funds according to governance decisions. The ETC monetary policy remains
+        fixed by the block reward schedule.
+      </p>
+
+      <p><strong>Can the treasury contract be upgraded later?</strong></p>
+      <p>
+        No. ECIP-1112 specifies that the contract is immutable. Future changes must be implemented
+        through new ECIPs and new contracts, not by upgrading the original treasury in place.
+      </p>
+
+      <p><strong>Who controls the treasury?</strong></p>
+      <p>
+        The treasury is controlled by protocol rules and the governance layer, not by a foundation
+        or multisig. It responds only to authorized calls from contracts specified by ECIP-1113
+        and ECIP-1114.
+      </p>
+
+      <p><strong>Can funds be moved without a governance proposal?</strong></p>
+      <p>
+        No. The treasury’s withdrawal functions are restricted to authorized governance modules.
+        There is no “back door” for arbitrary transfers.
+      </p>
+
+      <p><strong>What happens if the DAO design changes in the future?</strong></p>
+      <p>
+        The treasury is intentionally DAO-agnostic. New governance modules or processes can be
+        added via future ECIPs and connected to the treasury, as long as the network agrees and
+        updates its rules accordingly.
+      </p>
+
+      <p><strong>Where can I see how treasury funds are being used?</strong></p>
+      <p>
+        Because the treasury is a smart contract, all inflows and outflows are public. Explorers
+        and dashboards can show:
+      </p>
+      <ul>
+        <li>Current treasury balance.</li>
+        <li>Historical inflows from BASEFEE.</li>
+        <li>Payments linked to approved proposals.</li>
+      </ul>
+      <p>
+        For governance context, see the <a href="governance.html">Olympia DAO &amp; Funding Process</a>
+        and <a href="impact.html">Ecosystem Impact &amp; Use Cases</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Ethereum Classic DAO · <a href="index.html">Back to Home</a></p>
+  </footer>
+</body>
+</html>
