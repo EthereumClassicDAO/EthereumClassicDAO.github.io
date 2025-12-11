@@ -13,6 +13,7 @@ jobs:
   deploy-preview:
     runs-on: ubuntu-latest
     if: github.event.action != 'closed'
+    timeout-minutes: 10
     
     steps:
       - name: Checkout code
@@ -22,10 +23,14 @@ jobs:
         run: |
           echo "Validating HTML files..."
           # Check if HTML files exist and are valid
-          for file in *.html; do
-            if [ -f "$file" ]; then
-              echo "✓ Found: $file"
-            fi
+          shopt -s nullglob
+          html_files=(*.html)
+          if [ ${#html_files[@]} -eq 0 ]; then
+            echo "❌ No HTML files found"
+            exit 1
+          fi
+          for file in "${html_files[@]}"; do
+            echo "✓ Found: $file"
           done
       
       - name: Deploy to Netlify
@@ -41,7 +46,6 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 5
   
   cleanup-preview:
     runs-on: ubuntu-latest
